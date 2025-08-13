@@ -292,7 +292,7 @@ void matrix_scan_user(void) { // The very important timer.
         }
 
         //direction indicates which macro it is, with 1 being Macro 1, -1 being Macro 2, and 0 being no macro.
-        void dynamic_macro_record_start_user(int8_t direction){
+        bool dynamic_macro_record_start_user(int8_t direction){
             prevEnabled = rgb_matrix_is_enabled();
             if (!prevEnabled) { rgb_matrix_enable(); }
             prevRGBmode = rgb_matrix_get_mode();
@@ -313,9 +313,10 @@ void matrix_scan_user(void) { // The very important timer.
                     macro2rec = false;
                     break;
             }
+            return true;
         }
 
-        void dynamic_macro_record_end_user(int8_t direction){
+        bool dynamic_macro_record_end_user(int8_t direction){
             prevEnabled ? rgb_matrix_mode(prevRGBmode) : rgb_matrix_disable();
             switch(direction){
                 case 1:
@@ -329,6 +330,7 @@ void matrix_scan_user(void) { // The very important timer.
                     macro2 = false;
                     break;
             }
+            return true;
         }
     #endif
 
